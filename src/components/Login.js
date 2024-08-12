@@ -1,11 +1,29 @@
 import Header from "./Header";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { checkValidData } from "../utils/validate";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  const email = useRef(null);
+  const password = useRef(null);
+  const name = useRef(null);
+
   const handlelogIn = () => {
     setIsSignInForm(!isSignInForm);
   };
+  const handleButtonClick = () => {
+    // validate
+
+    const message = checkValidData(
+      email.current.value,
+      password.current.value,
+      name.current.value
+    );
+    setErrorMessage(message);
+  };
+
   return (
     <div>
       <Header />
@@ -17,28 +35,40 @@ const Login = () => {
         />
       </div>
 
-      <form className="absolute bg-[#000000be] flex flex-col w-96 py-7 gap-5 my-28 mx-auto right-0 left-0 px-5">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="absolute bg-[#000000be] flex flex-col w-96 py-7 gap-5 my-28 mx-auto right-0 left-0 px-5"
+      >
         <h1 className="text-white text-3xl font-bold mx-5 py-3">
           {isSignInForm ? "Sign In" : "Sign Up"}
         </h1>
         {!isSignInForm && (
           <input
+            ref={name}
             type="text"
             placeholder="Full Name"
             className="p-3 text-white mx-5 bg-transparent text-sm font-semibold rounded-md border border-gray-500"
           />
         )}
         <input
+          ref={email}
           type="text"
-          placeholder="Email or mobile number"
+          placeholder="Email ID"
           className="p-3 text-white mx-5 bg-transparent text-sm font-semibold rounded-md border border-gray-500"
         />
         <input
-          type="text"
+          ref={password}
+          type="password"
           placeholder="Password"
           className="p-3 text-white mx-5 bg-transparent text-sm font-semibold rounded-md border border-gray-500"
         />
-        <button className="text-white text-sm py-[0.6rem] font-semibold bg-red-600 mx-5 rounded-md">
+        <p className="text-red-600 ml-6 font-extralight text-xs">
+          {errorMessage}
+        </p>
+        <button
+          className="text-white text-sm py-[0.6rem] font-semibold bg-red-600 mx-5 rounded-md hover:bg-red-700 hover:scale-105"
+          onClick={handleButtonClick}
+        >
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
         <h3 className="text-gray-300 mx-auto text-sm">OR</h3>
@@ -46,7 +76,7 @@ const Login = () => {
           {isSignInForm ? "New to Netflix? " : "Already a user? "}
           <span
             onClick={handlelogIn}
-            className="text-white font-semibold cursor-pointer"
+            className="text-white font-semibold cursor-pointer "
           >
             {isSignInForm ? "Sign Up Now" : "Sign In Now"}.
           </span>
