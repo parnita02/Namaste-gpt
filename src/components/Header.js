@@ -32,9 +32,9 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="absolute w-full h-1/6 xl:px-[10rem] px-5 py-4 bg-gradient-to-b from-black z-10">
+    <div className="absolute w-full h-[10%] xl:px-[10rem] px-5 py-4 bg-gradient-to-b from-black z-10">
       <div className="flex justify-between">
-        <img className="lg:w-44 w-28 " src={LOGO_URL} alt="logo" />
+        <img className="lg:w-36 w-28 " src={LOGO_URL} alt="logo" />
 
         <div>
           <button
